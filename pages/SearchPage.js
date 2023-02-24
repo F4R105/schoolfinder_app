@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TextInput, SafeAreaView, FlatList, TouchableOpa
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 
 const fetchSchools = async () => {
-  const data = await fetch('https://fari-api.onrender.com/api')
+  const data = await fetch('https://school-finder.onrender.com/')
   const schools = await data.json()
   return schools
 }
