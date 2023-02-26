@@ -1,5 +1,14 @@
 import React, {useEffect,useState} from 'react'
-import { StyleSheet, Text, View, TextInput, SafeAreaView, FlatList, TouchableOpacity  } from 'react-native'
+import {PulseIndicator} from 'react-native-indicators'
+import { 
+  StyleSheet, 
+  Text, 
+  View, 
+  TextInput, 
+  SafeAreaView, 
+  FlatList, 
+  TouchableOpacity,
+  ActivityIndicator  } from 'react-native'
 
 // ICONS
 import FaIcon from 'react-native-vector-icons/FontAwesome';
@@ -13,23 +22,34 @@ const fetchSchools = async () => {
 const SearchScreen = ({navigation}) => {
 
   const [schools, setSchools] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(()=>{
-    fetchSchools().then(schools=>setSchools(schools))
+    fetchSchools()
+    .then(schools=>{
+      setSchools(schools)
+      setLoading(false)
+    })
+    .catch(error=>console.log(error))
   },[])
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Text style={styles.text}>SearchPage</Text> */}
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Explore</Text>
       </View>
-      <FlatList 
-        style={{flex: 1, paddingVertical: 10}}
-        data={schools}
-        renderItem={({item})=>(<School schoolName={item.name} navigation={navigation}/>)}
-        keyExtractor={item=>item.id}
-      />
+
+      {loading ? 
+        <Loader />
+        : 
+        <FlatList 
+          style={{flex: 1, paddingVertical: 10}}
+          data={schools}
+          renderItem={({item})=>(<School schoolName={item.name} navigation={navigation}/>)}
+          keyExtractor={item=>item.id}
+        />
+      }
+      
       <View style={styles.searchContainer}>
         <TextInput style={styles.input} placeholder="Search school"/>
       </View>
@@ -44,6 +64,12 @@ const School = ({schoolName, navigation}) => (
             <FaIcon name="caret-right" color="white" />
         </View>
     </TouchableOpacity>
+)
+
+const Loader = () => (
+  <View style={styles.loader}>
+    <PulseIndicator color='#ff7f2aff' size={70}/>
+  </View>
 )
 
 export default SearchScreen
@@ -96,5 +122,10 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         borderRadius: 400,
         width: "100%"
+    },
+    loader: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
     }
 })
