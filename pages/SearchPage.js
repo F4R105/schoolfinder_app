@@ -14,7 +14,7 @@ import {
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 
 const fetchSchools = async () => {
-  const data = await fetch('https://school-finder.onrender.com/')
+  const data = await fetch('https://school-finder.onrender.com/schools')
   const schools = await data.json()
   return schools
 }
