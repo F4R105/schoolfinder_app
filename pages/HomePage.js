@@ -18,7 +18,7 @@ const HomePage = ({navigation}) => {
       <ScrollView>
         <View style={styles.school}>
           <Image style={styles.schoolImage}></Image>
-          <View style={{borderColor: 'green',borderWidth: 1}}>
+          <View>
             <Text style={[styles.text,styles.schoolName]}>Arusha Technical College</Text>
             <Text style={[styles.text,styles.schoolDescr]}>Arusha close to Triple A night club, We offer IT course, Engineering and Electrical courses</Text>
           </View>

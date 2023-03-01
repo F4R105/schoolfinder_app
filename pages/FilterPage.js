@@ -2,13 +2,19 @@ import React, {useState} from 'react'
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable} from 'react-native'
 import SelectDropdown from 'react-native-select-dropdown'
 import { SelectList } from 'react-native-dropdown-select-list'
+import { Divider } from 'react-native-elements'
 
 const Regions = ["Arusha", "Dodoma", "Kagera", "Dar-es-salaam","Kigoma", "Iringa", "Singida", "Tabora", "Morogoro","Kilimanjaro", "Tanga", "Mtwara", "Mbeya", "Mwanza"]
 const Categories = [
+  {id: 5, label: "Level", options: ["Primary", "Secondary", "Advanced","College","University"]},
+  {id: 4, label: "Religion", options: ["Christian", "Islamic", "Mixed"]},
+  {id: 3, label: "Gender", options: ["Boys", "Girls", "Mixed"]},
   {id: 1, options: ["Public", "Private"]},
   {id: 2, options: ["International", "National"]},
-  {id: 3, label: "Gender", options: ["Boys", "Girls", "Mixed"]},
-  {id: 4, label: "Religion", options: ["Christian", "Islamic", "Mixed"]},
+  {id: 2, options: ["International", "National"]},
+  {id: 2, options: ["International", "National"]},
+  {id: 2, options: ["International", "National"]},
+  {id: 2, options: ["International", "National"]},
 ]
 
 const RegionSelection = () => {
@@ -44,13 +50,19 @@ const Option = ({option, chosen, setChosen, userChoice, setUserChoice}) => {
   )
 }
 
-const Category = ({options}) => {
+const Category = ({options, label}) => {
   const [userChoice, setUserChoice] = useState('')
   const [chosen, setChosen] = useState(false)
   return (
-    <ScrollView style={styles.category} horizontal>
-      {options.map(option=><Option option={option} chosen={chosen} setChosen={setChosen} userChoice={userChoice} setUserChoice={setUserChoice}/>)}
-    </ScrollView>
+    <>
+      <View>
+        <Text style={[styles.text,{fontSize: 10}]}>{label}</Text>
+      </View>
+      <ScrollView style={styles.category} horizontal>
+        {options.map(option=><Option option={option} chosen={chosen} setChosen={setChosen} userChoice={userChoice} setUserChoice={setUserChoice}/>)}
+      </ScrollView>
+      {/* <Divider /> */}
+    </>
   )
 }
 
@@ -63,10 +75,15 @@ const FilterPage = () => {
       </View>
       <ScrollView>
           <RegionSelection />
-          <View style={{paddingVertical: 30}}>
-          {Categories.map(category=><Category options={category.options} />)}
+          <View style={{paddingTop: 30, paddingBottom: 100}}>
+          {Categories.map(category=><Category label={category.label} options={category.options} />)}
           </View>
       </ScrollView>
+      <View style={styles.filterBtnContainer}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={[styles.text,{textTransform: "uppercase"}]}>Filter</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   )
 }
@@ -99,7 +116,8 @@ const styles = StyleSheet.create({
     backgroundColor: "blue"
   },
   category: {
-    paddingVertical: 20,
+    paddingBottom: 20,
+    paddingTop: 10,
     flexDirection: "row"
   },
   option: {
@@ -109,5 +127,24 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     padding: 10,
     marginRight: 10,
+  },
+  text: {color: "white"},
+  filterBtnContainer: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "#0e0f27ef",
+    right: 0,
+    left: 0,
+    height: 100,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  button: {
+    width: "90%",
+    height: "50%",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#543badff"
   }
 })
