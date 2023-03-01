@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Pressable} from 'react-native'
 import SelectDropdown from 'react-native-select-dropdown'
 import { SelectList } from 'react-native-dropdown-select-list'
 
 const Regions = ["Arusha", "Dodoma", "Kagera", "Dar-es-salaam","Kigoma", "Iringa", "Singida", "Tabora", "Morogoro","Kilimanjaro", "Tanga", "Mtwara", "Mbeya", "Mwanza"]
 const Categories = [
-  {choices: ["Public", "Private"]},
-  {choices: ["International", "National"]},
-  {label: "Gender", choices: ["Boys", "Girls", "Mixed"]},
-  {label: "Religion", choices: ["Christian", "Islamic", "Mixed"]},
+  {id: 1, options: ["Public", "Private"]},
+  {id: 2, options: ["International", "National"]},
+  {id: 3, label: "Gender", options: ["Boys", "Girls", "Mixed"]},
+  {id: 4, label: "Religion", options: ["Christian", "Islamic", "Mixed"]},
 ]
 
 const RegionSelection = () => {
@@ -27,11 +27,30 @@ const RegionSelection = () => {
   )
 }
 
-const Category = ({choices}) => {
+const Option = ({option, chosen, setChosen, userChoice, setUserChoice}) => {
+
   return (
-    <View style={styles.category}>
-      {choices.map(choice=><View style={styles.choice}><Text style={{color: "white", textAlign: "center"}}>{choice}</Text></View>)}
-    </View>
+    <Pressable 
+    style={[styles.option, {backgroundColor: (userChoice === option) ? '#ff7f2aff' : 'transparent'}]}
+    onPress={()=>{
+      (chosen && userChoice === option) ? setUserChoice('') : setUserChoice(option);
+      (chosen) ? setChosen(false) : setChosen(true)
+    }}
+    >
+      <Text style={{color: "white", textAlign: "center"}}>
+        {option}
+      </Text>
+    </Pressable>
+  )
+}
+
+const Category = ({options}) => {
+  const [userChoice, setUserChoice] = useState('')
+  const [chosen, setChosen] = useState(false)
+  return (
+    <ScrollView style={styles.category} horizontal>
+      {options.map(option=><Option option={option} chosen={chosen} setChosen={setChosen} userChoice={userChoice} setUserChoice={setUserChoice}/>)}
+    </ScrollView>
   )
 }
 
@@ -45,7 +64,7 @@ const FilterPage = () => {
       <ScrollView>
           <RegionSelection />
           <View style={{paddingVertical: 30}}>
-          {Categories.map(category=><Category choices={category.choices} />)}
+          {Categories.map(category=><Category options={category.options} />)}
           </View>
       </ScrollView>
     </SafeAreaView>
@@ -83,7 +102,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     flexDirection: "row"
   },
-  choice: {
+  option: {
     minWidth: 130,
     borderWidth: 1,
     borderColor: "grey",

@@ -23,6 +23,7 @@ const SearchScreen = ({navigation}) => {
 
   const [schools, setSchools] = useState([])
   const [loading, setLoading] = useState(true)
+  const [search, setSearch] = useState('')
 
   useEffect(()=>{
     fetchSchools()
@@ -42,16 +43,16 @@ const SearchScreen = ({navigation}) => {
       {loading ? 
         <Loader />
         : 
-        <FlatList 
-          style={{flex: 1, paddingVertical: 10}}
-          data={schools}
-          renderItem={({item})=>(<School schoolName={item.name} navigation={navigation}/>)}
-          keyExtractor={item=>item.id}
-        />
+        <Schools schools={schools} search={search} navigation={navigation} />
       }
       
       <View style={styles.searchContainer}>
-        <TextInput style={styles.input} placeholder="Search school"/>
+        <TextInput 
+          style={styles.input} 
+          value={search} 
+          onChangeText={(value=>setSearch(value))} 
+          placeholder="Search school"
+        />
       </View>
     </SafeAreaView>
   )
@@ -65,6 +66,27 @@ const School = ({schoolName, navigation}) => (
         </View>
     </TouchableOpacity>
 )
+
+const Schools = ({schools, search, navigation}) => {
+  const filteredSchools = schools.filter(school=>school.name.toLowerCase().includes(search.toLowerCase()))
+
+  if(filteredSchools.length !== 0) {
+    return (
+      <FlatList 
+        style={{flex: 1, paddingVertical: 10}}
+        data={schools.filter(school=>school.name.toLowerCase().includes(search.toLowerCase()))}
+        renderItem={({item})=>(<School schoolName={item.name} navigation={navigation}/>)}
+        keyExtractor={item=>item.id}
+      />
+    )
+  }else{
+    return (
+      <View style={styles.notFound}>
+        <Text style={styles.text}>School Not Found</Text>
+      </View>
+    )
+  }
+}
 
 const Loader = () => (
   <View style={styles.loader}>
@@ -93,6 +115,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10, 
         borderRadius: 10, 
         marginBottom: 10,
+    },
+    text: {
+      color: "white"
     },
     schoolName: {
         color: "white", 
@@ -127,5 +152,12 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center'
+    },
+    notFound: {
+      backgroundColor: "gray",
+      borderRadius: 10,
+      height: "50%",
+      justifyContent: "center",
+      alignItems: "center"
     }
 })
