@@ -1,11 +1,14 @@
-import { Text, View, ScrollView } from 'react-native'
-import React, { useContext } from 'react'
+import { Text, View, ScrollView, TextInput } from 'react-native'
+import React, { useContext, useState } from 'react'
 
 import GlobalStyles from '../styles/global'
+import HomeStyles from '../styles/home'
 import ThemeContext from '../contexts/ThemeContext'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const Home = () => {
+const Home = ({navigation}) => {
   const {APP_COLORS} = useContext(ThemeContext)
+  const [searchQuery, setSearchQuery] = useState('')
 
   return (
     <View style={[GlobalStyles.container, {backgroundColor: APP_COLORS.backgroundColor}]}>
@@ -15,7 +18,19 @@ const Home = () => {
         <Text style={[GlobalStyles.logoText, {color: APP_COLORS.brandOrange}]}>Finder</Text>
       </View>
       <ScrollView style={GlobalStyles.pageContents}>
-        
+        <View style={HomeStyles.searchContainer}>
+          <TextInput
+            onChangeText={text => setSearchQuery(text)}
+            value={searchQuery}
+            style={HomeStyles.searchInput}
+          />
+          <TouchableOpacity 
+            style={[HomeStyles.searchBtn, {backgroundColor: APP_COLORS.brandBlue}]}
+            onPress={()=>navigation.navigate('Matches', searchQuery)}
+          >
+            <Text style={HomeStyles.searchBtnText}>Search</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   )

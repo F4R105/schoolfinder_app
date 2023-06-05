@@ -14,7 +14,7 @@ export const ThemeContextProvider = ({children}) => {
             let userThemeSetting = await SecureStore.getItemAsync(SECURE_STORE_KEY)
             if(!userThemeSetting) userThemeSetting = await SecureStore.setItemAsync(SECURE_STORE_KEY, colorScheme)
             setTheme(userThemeSetting)
-            setTheme('dark')
+            // setTheme('dark')
         }catch(error){console.log('ThemeContext.js', 'useEffect', error.message)}
     }
 
@@ -32,6 +32,7 @@ export const ThemeContextProvider = ({children}) => {
     const APP_COLORS = {
         backgroundColor: (theme === "light") ? "#e6e6e6ff" : "#050811ff",
         themeOppositeColor: (theme === "light") ? "#050811ff" : "#e6e6e6ff",
+        floatingBtnBg: (theme === "light") ? "rgba(255,255,255,0.7)" : "rgba(10, 17, 37,0.7)",
         brandOrange: "#ff944cff",
         brandBlue: "#6b57b6ff",
         cardsColor: (theme === "light") ? "#ffffffff" : "#161333ff",
