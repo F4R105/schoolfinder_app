@@ -7,6 +7,8 @@ import ThemeContext from '../contexts/ThemeContext'
 
 import Categories from '../categories'
 
+import { AntDesign } from '@expo/vector-icons';
+
 const Category = ({category, state, setState}) => {
   const {APP_COLORS} = useContext(ThemeContext)
 
@@ -67,11 +69,15 @@ const Filter = ({navigation}) => {
             <Category category={Categories.ownership} state={ownership} setState={setOwnership}/>
             <Category category={Categories.regions} state={region} setState={setRegion}/>
           </View>
+
+          {/* SPACER */}
+          <View style={GlobalStyles.bottomSpacer}></View>
       </ScrollView>
       <View style={[FilterStyles.filterBtnContainer, {backgroundColor: APP_COLORS.floatingBtnBg}]}>
         <TouchableOpacity style={[FilterStyles.button, {backgroundColor: APP_COLORS.brandBlue}]} onPress={()=>{
           navigation.navigate('Matches', filterObject);
         }}>
+          <AntDesign name="filter" size={24} color="white" />
           <Text style={[FilterStyles.text,{textTransform: "uppercase"}]}>Filter</Text>
         </TouchableOpacity>
       </View>

@@ -15,7 +15,15 @@ export default SchoolStyles = StyleSheet.create({
         color: "gray",
     },
     introduction: {
-        gap: 25
+        marginBottom: 15,
+    },
+    schoolName: {
+        fontSize: 25,
+        fontWeight: "bold"
+    },
+    schoolId: {
+        fontSize: 20,
+        fontWeight: "bold"
     },
     section: {
         marginTop: 35,
@@ -67,6 +75,15 @@ export default SchoolStyles = StyleSheet.create({
     },
     socials: {
 
+    },
+    results: {
+        paddingVertical: 10
+    },
+    result: {
+        padding: 5,
+        marginRight: 15,
+        minWidth: 180, 
+        borderRadius: 10
     },
     callBtnContainer: {
         position: "absolute",

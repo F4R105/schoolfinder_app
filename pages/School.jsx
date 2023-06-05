@@ -12,17 +12,16 @@ const School = () => {
 
   return (
     <View style={[GlobalStyles.container, {backgroundColor: APP_COLORS.backgroundColor}]}>
-      <Text style={[GlobalStyles.pageTitle, {color: APP_COLORS.themeOppositeColor}]}>Arusha technical college</Text>
-      <View style={GlobalStyles.logo}>
-        <Text style={[GlobalStyles.logoText, {color: APP_COLORS.brandOrange}]}>P0101</Text>
+      <View style={SchoolStyles.introduction}>
+        <Text style={[SchoolStyles.schoolName, {color: APP_COLORS.themeOppositeColor}]}>Arusha technical college</Text>
+        <Text style={[SchoolStyles.schoolId, {color: APP_COLORS.brandOrange}]}>P0101</Text>
       </View>
       <ScrollView style={GlobalStyles.pageContents}>
-        {/* INTRODUCTION */}
         <View>
           <Text style={[SchoolStyles.cardTitle, {color: APP_COLORS.themeOppositeColor}]}>DESCRIPTION</Text>
           <Text style={[SchoolStyles.cardDescription, {fontSize:15}]}>Adipisicing elit. Nostrum itaque omnis rem ipsam asperiores fugiat quam deserunt maiores expedita eaque. Expedita, neque dolore impedit culpa aspernatur consequatur in dolorem repellat nihil officia maiores eum, doloribus veritatis quidem ipsam adipisci velit?</Text>
         </View>
-        <View style={[SchoolStyles.section,SchoolStyles.introduction]}>
+        <View style={SchoolStyles.section}>
           <View>
             <Text style={[SchoolStyles.cardTitle, {color: APP_COLORS.themeOppositeColor}]}>SCHOOL FEES</Text>
             <Text style={[SchoolStyles.cardDescription, {color: APP_COLORS.brandOrange, fontSize: 18, fontWeight: "bold"}]}>TSH 1,500,000/= per year</Text>
@@ -102,12 +101,62 @@ const School = () => {
         {/* RESULTS */}
         <View style={SchoolStyles.section}>
           <Text style={[SchoolStyles.sectionTitle, { color: APP_COLORS.themeOppositeColor}]}>Latest results</Text>
-          <ScrollView>
-            <View>
-
+          <ScrollView horizontal style={SchoolStyles.results}>
+            <View style={[SchoolStyles.result, {backgroundColor: APP_COLORS.cardsColor}]}>
+              <View style={{borderWidth: 1, borderColor: APP_COLORS.themeOppositeColor, maxWidth: 200, borderRadius: 10, padding: 5, gap: 8}}>
+                <Text style={[SchoolStyles.resultYear, {fontSize: 20, fontWeight: "bold", color: APP_COLORS.themeOppositeColor}]}>2022</Text>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade A:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade B:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade C:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade D:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade F:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+              </View>
+            </View>
+            <View style={[SchoolStyles.result, {backgroundColor: APP_COLORS.cardsColor}]}>
+              <View style={{borderWidth: 1, borderColor: APP_COLORS.themeOppositeColor, maxWidth: 200, borderRadius: 10, padding: 5, gap: 8}}>
+                <Text style={[SchoolStyles.resultYear, {fontSize: 20, fontWeight: "bold", color: APP_COLORS.themeOppositeColor}]}>2022</Text>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade A:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade B:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade C:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade D:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+                <View style={{flexDirection: "row", gap: 5}}>
+                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade F:</Text>
+                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+                </View>
+              </View>
             </View>
           </ScrollView>
         </View>
+
+        {/* SPACER */}
+        <View style={GlobalStyles.bottomSpacer}></View>
       </ScrollView>
 
       {/* CALL BTN */}

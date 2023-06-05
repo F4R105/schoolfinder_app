@@ -19,6 +19,9 @@ export default GlobalStyles = StyleSheet.create({
     },
     pageContents: {
         flex: 1,
-        paddingVertical: 10
+        paddingVertical: 10,
+    },
+    bottomSpacer: {
+        height: 250
     }
 })
