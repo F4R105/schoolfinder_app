@@ -1,5 +1,5 @@
 import { Text, View, ScrollView, TextInput, FlatList, TouchableOpacity } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
 import GlobalStyles from '../styles/global'
 import MatchesStyles from '../styles/matches'
@@ -10,22 +10,22 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 
-const School = () => {
+const School = ({school}) => {
   const {APP_COLORS} = useContext(ThemeContext)
   const navigation = useNavigation()
 
   return (
     <TouchableOpacity 
       style={[MatchesStyles.school, {backgroundColor: APP_COLORS.cardsColor}]}
-      onPress={()=>navigation.navigate('School')}
+      onPress={()=>navigation.navigate('School', {school})}
     >
       <View style={[MatchesStyles.schoolImage, {backgroundColor: APP_COLORS.brandOrange}]}>
         <FontAwesome5 name="school" size={15} color="white" />
       </View>
       <View style={MatchesStyles.schoolInfoContainer}>
         <View>
-          <Text style={[MatchesStyles.schoolName, {color: APP_COLORS.themeOppositeColor}]}>Arusha tech</Text>
-          <Text style={[MatchesStyles.schoolLevel, {backgroundColor: APP_COLORS.brandBlue}]}>Primary</Text>
+          <Text style={[MatchesStyles.schoolName, {color: APP_COLORS.themeOppositeColor}]}>{school.name}</Text>
+          <Text style={[MatchesStyles.schoolLevel, {backgroundColor: APP_COLORS.brandBlue}]}>{school.category.level}</Text>
         </View>
         <FaIcon name="caret-right" size={20} color={APP_COLORS.themeOppositeColor} />
       </View>
@@ -34,9 +34,51 @@ const School = () => {
 }
 
 
-const Matches = () => {
+const Matches = ({route}) => {
   const {APP_COLORS} = useContext(ThemeContext)
   const navigation = useNavigation()
+
+  const {state} = route.params
+  console.log(state.query)
+
+  const [schools, setSchools] = useState([])
+  const [error, setError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [loading, setLoading] = useState(true)
+
+  const searchForSchools = async (query) => {
+    const endpoint = state.trigger === "search" ? "search" : "filter"
+    try{
+      const res = await fetch(`https://d886-197-250-130-251.ngrok-free.app/${endpoint}`, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({query})
+      })
+
+      const matches = await res.json()
+      console.log('matches',matches)
+      return {status: "success", data: matches}
+    }catch(error){
+      return {status: "error", message: error.message}
+    }
+  }
+
+  useEffect(()=>{
+    searchForSchools(state.query)
+    .then(res => {
+      if(res.status === "error"){
+        setError(true)
+        setErrorMessage(res.message)
+        setLoading(false)
+      }else{
+        setSchools(res.data)
+        setLoading(false)
+      }
+    })
+  },[])
 
   return (
     <View style={[GlobalStyles.container, {backgroundColor: APP_COLORS.backgroundColor}]}>
@@ -45,27 +87,18 @@ const Matches = () => {
         <Text style={[GlobalStyles.logoText, {color: APP_COLORS.themeOppositeColor}]}>school</Text>
         <Text style={[GlobalStyles.logoText, {color: APP_COLORS.brandOrange}]}>Finder</Text>
       </View>
-      <View style={[MatchesStyles.searchQuery]}>
+      {(state.trigger === "search") && <View style={[MatchesStyles.searchQuery]}>
         <FontAwesome name="search" size={20} color={APP_COLORS.themeOppositeColor} />
         <Text style={[{fontWeight: "bold"}, {color: APP_COLORS.themeOppositeColor}]}>Matching:</Text>
-        <Text style={[{fontWeight: "normal", textAlign: "right"}, {color: APP_COLORS.themeOppositeColor}]}>"Arusha"</Text>
-      </View>
-      <ScrollView style={GlobalStyles.pageContents}>
-        {/* <FlatList 
-          data={}
-          renderItem={({item})=>(<School school={item} navigation={navigation}/>)}
+        <Text style={[{fontWeight: "normal", textAlign: "right"}, {color: APP_COLORS.themeOppositeColor}]}>"{state.query}"</Text>
+      </View>}
+      <View style={GlobalStyles.pageContents}>
+        <FlatList 
+          data={schools}
+          renderItem={({item})=>(<School school={item} />)}
           keyExtractor={item=>item._id}
-        /> */}
-        <School />
-        <School />
-        <School />
-        <School />
-        <School />
-        <School />
-        <School />
-        <School />
-        <School />
-      </ScrollView>
+        />
+      </View>
     </View>
   )
 }

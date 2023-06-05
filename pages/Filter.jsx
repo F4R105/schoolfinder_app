@@ -75,7 +75,7 @@ const Filter = ({navigation}) => {
       </ScrollView>
       <View style={[FilterStyles.filterBtnContainer, {backgroundColor: APP_COLORS.floatingBtnBg}]}>
         <TouchableOpacity style={[FilterStyles.button, {backgroundColor: APP_COLORS.brandBlue}]} onPress={()=>{
-          navigation.navigate('Matches', filterObject);
+          navigation.navigate('Matches',  {state: {trigger: "filter", query: filterObject}});
         }}>
           <AntDesign name="filter" size={24} color="white" />
           <Text style={[FilterStyles.text,{textTransform: "uppercase"}]}>Filter</Text>

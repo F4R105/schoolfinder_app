@@ -40,6 +40,7 @@ export default MatchesStyles = StyleSheet.create({
         textAlign: "center",
         marginTop: 5,
         padding: 3,
-        fontSize: 12
+        fontSize: 12,
+        maxWidth: 100
     }
 })

@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, TouchableOpacity, ImageBackground } from 'react-native'
+import { Text, View, ScrollView, TouchableOpacity, Linking } from 'react-native'
 import React, {useContext} from 'react'
 
 import GlobalStyles from '../styles/global'
@@ -7,24 +7,25 @@ import ThemeContext from '../contexts/ThemeContext'
 
 import { Feather } from '@expo/vector-icons';
 
-const School = () => {
+const School = ({route}) => {
   const {APP_COLORS} = useContext(ThemeContext)
+  const school = route.params.school
 
   return (
     <View style={[GlobalStyles.container, {backgroundColor: APP_COLORS.backgroundColor}]}>
       <View style={SchoolStyles.introduction}>
-        <Text style={[SchoolStyles.schoolName, {color: APP_COLORS.themeOppositeColor}]}>Arusha technical college</Text>
-        <Text style={[SchoolStyles.schoolId, {color: APP_COLORS.brandOrange}]}>P0101</Text>
+        <Text style={[SchoolStyles.schoolName, {color: APP_COLORS.themeOppositeColor}]}>{school.name}</Text>
+        <Text style={[SchoolStyles.schoolId, {color: APP_COLORS.brandOrange}]}>{school.school_id}</Text>
       </View>
       <ScrollView style={GlobalStyles.pageContents}>
         <View>
           <Text style={[SchoolStyles.cardTitle, {color: APP_COLORS.themeOppositeColor}]}>DESCRIPTION</Text>
-          <Text style={[SchoolStyles.cardDescription, {fontSize:15}]}>Adipisicing elit. Nostrum itaque omnis rem ipsam asperiores fugiat quam deserunt maiores expedita eaque. Expedita, neque dolore impedit culpa aspernatur consequatur in dolorem repellat nihil officia maiores eum, doloribus veritatis quidem ipsam adipisci velit?</Text>
+          <Text style={[SchoolStyles.cardDescription, {fontSize:15}]}>{school.description === "" ? "-" : school.description}</Text>
         </View>
         <View style={SchoolStyles.section}>
           <View>
             <Text style={[SchoolStyles.cardTitle, {color: APP_COLORS.themeOppositeColor}]}>SCHOOL FEES</Text>
-            <Text style={[SchoolStyles.cardDescription, {color: APP_COLORS.brandOrange, fontSize: 18, fontWeight: "bold"}]}>TSH 1,500,000/= per year</Text>
+            <Text style={[SchoolStyles.cardDescription, {color: APP_COLORS.brandOrange, fontSize: 18, fontWeight: "bold"}]}>{school.category.school_fee === "" ? "-" : `TSH ${school.category.school_fee}/= per year`}</Text>
           </View>
         </View>
 
@@ -34,27 +35,23 @@ const School = () => {
           <ScrollView horizontal style={SchoolStyles.categories}>
             <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
               <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Level</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>Primary</Text>
+              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.level === "" ? "-" : school.category.level}</Text>
             </View>
             <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Level</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>Primary</Text>
+              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Religion</Text>
+              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.religion === "" ? "-" : school.category.religion}</Text>
             </View>
             <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Level</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>Primary</Text>
+              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Gender</Text>
+              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.gender === "" ? "-" : school.category.gender}</Text>
             </View>
             <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Level</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>Primary</Text>
+              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Ownership</Text>
+              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.ownership === "" ? "-" : school.category.ownership}</Text>
             </View>
             <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Level</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>Primary</Text>
-            </View>
-            <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Level</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>Primary</Text>
+              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Occupation</Text>
+              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.occupation === "" ? "-" : school.category.occupation}</Text>
             </View>
           </ScrollView>
         </View>
@@ -80,21 +77,25 @@ const School = () => {
           <Text style={[SchoolStyles.sectionTitle, { color: APP_COLORS.themeOppositeColor}]}>Contacts</Text>
           <View style={[SchoolStyles.contactCard, {backgroundColor: APP_COLORS.cardsColor}]}>
             <View style={SchoolStyles.contact}>
+              <Text style={[SchoolStyles.contactKey, {color: APP_COLORS.themeOppositeColor}]}>Phone</Text>
+              <Text style={[SchoolStyles.contactValue, {color: APP_COLORS.themeOppositeColor}]}>{school.contacts.phone === "" ? "-" : school.contacts.phone}</Text>
+            </View>
+            <View style={SchoolStyles.contact}>
               <Text style={[SchoolStyles.contactKey, {color: APP_COLORS.themeOppositeColor}]}>Email</Text>
-              <Text style={[SchoolStyles.contactValue, {color: APP_COLORS.themeOppositeColor}]}>kajubufaraji@gmail.com</Text>
+              <Text style={[SchoolStyles.contactValue, {color: APP_COLORS.themeOppositeColor}]}>{school.contacts.email === "" ? "-" : school.contacts.email}</Text>
             </View>
             <View style={SchoolStyles.contact}>
               <Text style={[SchoolStyles.contactKey, {color: APP_COLORS.themeOppositeColor}]}>Mailbox</Text>
-              <Text style={[SchoolStyles.contactValue, {color: APP_COLORS.themeOppositeColor}]}>P.O.Box 991</Text>
+              <Text style={[SchoolStyles.contactValue, {color: APP_COLORS.themeOppositeColor}]}>{school.contacts.mailbox === "" ? "-" : school.contacts.mailbox}</Text>
             </View>
-            <View style={SchoolStyles.contact}>
+            {school.contacts.socials.length !== 0 && <View style={SchoolStyles.contact}>
               <Text style={[SchoolStyles.contactKey, {color: APP_COLORS.themeOppositeColor}]}>Social media</Text>
               <View style={SchoolStyles.socials}>
                 <Text style={[SchoolStyles.contactValue, {color: APP_COLORS.themeOppositeColor}]}>kajubufaraji@gmail.com</Text>
                 <Text style={[SchoolStyles.contactValue, {color: APP_COLORS.themeOppositeColor}]}>kajubufaraji@gmail.com</Text>
                 <Text style={[SchoolStyles.contactValue, {color: APP_COLORS.themeOppositeColor}]}>kajubufaraji@gmail.com</Text>
               </View>
-            </View>
+            </View>}
           </View>
         </View>
 
@@ -102,56 +103,33 @@ const School = () => {
         <View style={SchoolStyles.section}>
           <Text style={[SchoolStyles.sectionTitle, { color: APP_COLORS.themeOppositeColor}]}>Latest results</Text>
           <ScrollView horizontal style={SchoolStyles.results}>
-            <View style={[SchoolStyles.result, {backgroundColor: APP_COLORS.cardsColor}]}>
-              <View style={{borderWidth: 1, borderColor: APP_COLORS.themeOppositeColor, maxWidth: 200, borderRadius: 10, padding: 5, gap: 8}}>
-                <Text style={[SchoolStyles.resultYear, {fontSize: 20, fontWeight: "bold", color: APP_COLORS.themeOppositeColor}]}>2022</Text>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade A:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade B:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade C:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade D:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade F:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-              </View>
-            </View>
-            <View style={[SchoolStyles.result, {backgroundColor: APP_COLORS.cardsColor}]}>
-              <View style={{borderWidth: 1, borderColor: APP_COLORS.themeOppositeColor, maxWidth: 200, borderRadius: 10, padding: 5, gap: 8}}>
-                <Text style={[SchoolStyles.resultYear, {fontSize: 20, fontWeight: "bold", color: APP_COLORS.themeOppositeColor}]}>2022</Text>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade A:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade B:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade C:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade D:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
-                </View>
-                <View style={{flexDirection: "row", gap: 5}}>
-                  <Text style={{color: APP_COLORS.themeOppositeColor}}>Grade F:</Text>
-                  <Text style={{color: APP_COLORS.brandOrange}}>13</Text>
+            {school.results.map(result => (
+              <View style={[SchoolStyles.result, {backgroundColor: APP_COLORS.cardsColor}]}>
+                <View style={{borderWidth: 1, borderColor: APP_COLORS.themeOppositeColor, maxWidth: 200, borderRadius: 10, padding: 5, gap: 8}}>
+                  <Text style={[SchoolStyles.resultYear, {fontSize: 20, fontWeight: "bold", color: APP_COLORS.themeOppositeColor}]}>{result.year}</Text>
+                  <View style={{flexDirection: "row", gap: 5}}>
+                    <Text style={{color: APP_COLORS.themeOppositeColor}}>{school.category.level === "primary" ? "Grade A:" : "Division One:"}</Text>
+                    <Text style={{color: APP_COLORS.brandOrange}}>{school.category.level === "primary" ? result.grades["A"] : result.results["division_one"]}</Text>
+                  </View>
+                  <View style={{flexDirection: "row", gap: 5}}>
+                    <Text style={{color: APP_COLORS.themeOppositeColor}}>{school.category.level === "primary" ? "Grade B:" : "Division Two:"}</Text>
+                    <Text style={{color: APP_COLORS.brandOrange}}>{school.category.level === "primary" ? result.grades["B"] : result.results["division_two"]}</Text>
+                  </View>
+                  <View style={{flexDirection: "row", gap: 5}}>
+                    <Text style={{color: APP_COLORS.themeOppositeColor}}>{school.category.level === "primary" ? "Grade C:" : "Division Three:"}</Text>
+                    <Text style={{color: APP_COLORS.brandOrange}}>{school.category.level === "primary" ? result.grades["C"] : result.results["division_three"]}</Text>
+                  </View>
+                  <View style={{flexDirection: "row", gap: 5}}>
+                    <Text style={{color: APP_COLORS.themeOppositeColor}}>{school.category.level === "primary" ? "Grade D:" : "Division Four:"}</Text>
+                    <Text style={{color: APP_COLORS.brandOrange}}>{school.category.level === "primary" ? result.grades["D"] : result.results["division_four"]}</Text>
+                  </View>
+                  <View style={{flexDirection: "row", gap: 5}}>
+                    <Text style={{color: APP_COLORS.themeOppositeColor}}>{school.category.level === "primary" ? "Fail:" : "Fail:"}</Text>
+                    <Text style={{color: APP_COLORS.brandOrange}}>{school.category.level === "primary" ? result.grades["E"] : result.results["fail"]}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
+            ))}
           </ScrollView>
         </View>
 
@@ -160,14 +138,14 @@ const School = () => {
       </ScrollView>
 
       {/* CALL BTN */}
-      <View style={[SchoolStyles.callBtnContainer, {backgroundColor: APP_COLORS.floatingBtnBg}]}>
+      {school.contacts.phone !== "" && <View style={[SchoolStyles.callBtnContainer, {backgroundColor: APP_COLORS.floatingBtnBg}]}>
         <TouchableOpacity style={[SchoolStyles.callButton, {backgroundColor: APP_COLORS.brandBlue}]} onPress={()=>{
-          navigation.navigate('Matches', filterObject);
+          Linking.openURL(`tel:${school.contacts.phone}`)
         }}>
             <Feather name="phone-call" size={20} color="white" />
             <Text style={[{textTransform: "uppercase",color: "white", flexDirection: "row", alignItems: "center", gap: 10}]}>Call School</Text>
         </TouchableOpacity>
-      </View>
+      </View>}
     </View>
   )
 }

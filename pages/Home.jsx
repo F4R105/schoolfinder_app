@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, TextInput } from 'react-native'
+import { Text, View, ScrollView, TextInput, ToastAndroid } from 'react-native'
 import React, { useContext, useState } from 'react'
 
 import GlobalStyles from '../styles/global'
@@ -26,7 +26,10 @@ const Home = ({navigation}) => {
           />
           <TouchableOpacity 
             style={[HomeStyles.searchBtn, {backgroundColor: APP_COLORS.brandBlue}]}
-            onPress={()=>navigation.navigate('Matches', searchQuery)}
+            onPress={()=>{
+              if(searchQuery === "") return ToastAndroid.show('Search is empty', ToastAndroid.SHORT)
+              navigation.navigate('Matches', {state: {trigger: "search", query: searchQuery}})
+            }}
           >
             <Text style={HomeStyles.searchBtnText}>Search</Text>
           </TouchableOpacity>
