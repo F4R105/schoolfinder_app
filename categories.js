@@ -8,7 +8,7 @@ const Categories = {
         ]
     },
     religion: {
-        label: "Label",
+        label: "Religion",
         options: [
             {id: 1, label: "Mixed"},
             {id: 2, label: "Islamic"}, 

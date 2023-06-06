@@ -104,7 +104,7 @@ const School = ({route}) => {
           <Text style={[SchoolStyles.sectionTitle, { color: APP_COLORS.themeOppositeColor}]}>Latest results</Text>
           <ScrollView horizontal style={SchoolStyles.results}>
             {school.results.map(result => (
-              <View style={[SchoolStyles.result, {backgroundColor: APP_COLORS.cardsColor}]}>
+              <View key={result.year} style={[SchoolStyles.result, {backgroundColor: APP_COLORS.cardsColor}]}>
                 <View style={{borderWidth: 1, borderColor: APP_COLORS.themeOppositeColor, maxWidth: 200, borderRadius: 10, padding: 5, gap: 8}}>
                   <Text style={[SchoolStyles.resultYear, {fontSize: 20, fontWeight: "bold", color: APP_COLORS.themeOppositeColor}]}>{result.year}</Text>
                   <View style={{flexDirection: "row", gap: 5}}>

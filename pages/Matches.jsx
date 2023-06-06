@@ -10,6 +10,10 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
 
+import Loader from '../components/Loader'
+import Empty from '../components/Empty'
+import Error from '../components/Error'
+
 const School = ({school}) => {
   const {APP_COLORS} = useContext(ThemeContext)
   const navigation = useNavigation()
@@ -36,7 +40,6 @@ const School = ({school}) => {
 
 const Matches = ({route}) => {
   const {APP_COLORS} = useContext(ThemeContext)
-  const navigation = useNavigation()
 
   const {state} = route.params
   console.log(state.query)
@@ -49,7 +52,7 @@ const Matches = ({route}) => {
   const searchForSchools = async (query) => {
     const endpoint = state.trigger === "search" ? "search" : "filter"
     try{
-      const res = await fetch(`https://d886-197-250-130-251.ngrok-free.app/${endpoint}`, {
+      const res = await fetch(`https://cf2a-197-250-130-251.ngrok-free.app/${endpoint}`, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -59,7 +62,6 @@ const Matches = ({route}) => {
       })
 
       const matches = await res.json()
-      console.log('matches',matches)
       return {status: "success", data: matches}
     }catch(error){
       return {status: "error", message: error.message}
@@ -93,11 +95,21 @@ const Matches = ({route}) => {
         <Text style={[{fontWeight: "normal", textAlign: "right"}, {color: APP_COLORS.themeOppositeColor}]}>"{state.query}"</Text>
       </View>}
       <View style={GlobalStyles.pageContents}>
-        <FlatList 
-          data={schools}
-          renderItem={({item})=>(<School school={item} />)}
-          keyExtractor={item=>item._id}
-        />
+        {loading ? <Loader /> : 
+          <>
+            {error ? <Error message={errorMessage}/> :
+              <>
+                {schools.length === 0 ? <Empty /> :
+                  <FlatList 
+                    data={schools}
+                    renderItem={({item})=>(<School school={item} />)}
+                    keyExtractor={item=>item._id}
+                  />
+                }
+              </>
+            }
+          </>
+        }
       </View>
     </View>
   )
