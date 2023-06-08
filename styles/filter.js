@@ -31,7 +31,7 @@ export default FilterStyles = StyleSheet.create({
         flexDirection: "row"
       },
       option: {
-        minWidth: 120,
+        minWidth: 125,
         minHeight: 40,
         display: "flex",
         alignItems: "center",

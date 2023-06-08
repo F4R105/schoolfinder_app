@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, TextInput, FlatList, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, TextInput, FlatList, TouchableOpacity, Pressable } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 
 import GlobalStyles from '../styles/global'
@@ -40,6 +40,7 @@ const School = ({school}) => {
 
 const Matches = ({route}) => {
   const {APP_COLORS} = useContext(ThemeContext)
+  const navigation = useNavigation()
 
   const {state} = route.params
   console.log(state.query)
@@ -52,7 +53,7 @@ const Matches = ({route}) => {
   const searchForSchools = async (query) => {
     const endpoint = state.trigger === "search" ? "search" : "filter"
     try{
-      const res = await fetch(`https://cf2a-197-250-130-251.ngrok-free.app/${endpoint}`, {
+      const res = await fetch(`https://038d-197-250-51-163.ngrok-free.app/${endpoint}`, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -89,11 +90,12 @@ const Matches = ({route}) => {
         <Text style={[GlobalStyles.logoText, {color: APP_COLORS.themeOppositeColor}]}>school</Text>
         <Text style={[GlobalStyles.logoText, {color: APP_COLORS.brandOrange}]}>Finder</Text>
       </View>
-      {(state.trigger === "search") && <View style={[MatchesStyles.searchQuery]}>
+      {(state.trigger === "search") && <Pressable onPress={() => navigation.goBack()} style={[MatchesStyles.searchQuery]}>
         <FontAwesome name="search" size={20} color={APP_COLORS.themeOppositeColor} />
+        <Text style={[{fontWeight: "bold"}, {color: APP_COLORS.themeOppositeColor}]}>{!loading && schools.length}</Text>
         <Text style={[{fontWeight: "bold"}, {color: APP_COLORS.themeOppositeColor}]}>Matching:</Text>
         <Text style={[{fontWeight: "normal", textAlign: "right"}, {color: APP_COLORS.themeOppositeColor}]}>"{state.query}"</Text>
-      </View>}
+      </Pressable>}
       <View style={GlobalStyles.pageContents}>
         {loading ? <Loader /> : 
           <>

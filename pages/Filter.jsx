@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, Pressable, TouchableOpacity } from 'react-native'
+import { Text, View, ScrollView, Pressable, TouchableOpacity, ToastAndroid } from 'react-native'
 import React, {useContext, useState} from 'react'
 
 import GlobalStyles from '../styles/global'
@@ -22,11 +22,11 @@ const Category = ({category, state, setState}) => {
           return(
             <Pressable 
               style={[FilterStyles.option, {
-                backgroundColor: (state == option.label) ? '#ff7f2aff' : 'transparent',
-                borderColor: (state == option.label) ? APP_COLORS.brandOrange : 'gray',
+                backgroundColor: (state == option.value) ? '#ff7f2aff' : 'transparent',
+                borderColor: (state == option.value) ? APP_COLORS.brandOrange : 'gray',
               }]}
               onPress={()=>{
-                setState(option.label)
+                setState(option.value)
               }}
               key={option.id}
             >
@@ -48,10 +48,11 @@ const Filter = ({navigation}) => {
   const [religion, setReligion] = useState('')
   const [gender, setGender] = useState('')
   const [ownership, setOwnership] = useState('')
-  const [region, setRegion] = useState('')
+  const [occupation, setOccupation] = useState('')
+  // const [fee, setFee]= useState('')
 
   const filterObject = {
-    level, religion, gender, ownership, region
+    level, religion, gender, ownership, occupation
   }
 
   return (
@@ -67,7 +68,8 @@ const Filter = ({navigation}) => {
             <Category category={Categories.religion} state={religion} setState={setReligion}/>
             <Category category={Categories.gender} state={gender} setState={setGender}/>
             <Category category={Categories.ownership} state={ownership} setState={setOwnership}/>
-            <Category category={Categories.regions} state={region} setState={setRegion}/>
+            <Category category={Categories.occupation} state={occupation} setState={setOccupation}/>
+            {/* <Category category={Categories.school_fee} state={fee} setState={setFee}/> */}
           </View>
 
           {/* SPACER */}
@@ -75,6 +77,7 @@ const Filter = ({navigation}) => {
       </ScrollView>
       <View style={[FilterStyles.filterBtnContainer, {backgroundColor: APP_COLORS.floatingBtnBg}]}>
         <TouchableOpacity style={[FilterStyles.button, {backgroundColor: APP_COLORS.brandBlue}]} onPress={()=>{
+          if(level === "" || religion === "" || gender === "" || ownership == "" || occupation == "") return ToastAndroid.show('Complete all filters', ToastAndroid.SHORT)
           navigation.navigate('Matches',  {state: {trigger: "filter", query: filterObject}});
         }}>
           <AntDesign name="filter" size={24} color="white" />

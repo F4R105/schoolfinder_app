@@ -33,25 +33,35 @@ const School = ({route}) => {
         <View style={SchoolStyles.section}>
           <Text style={[SchoolStyles.sectionTitle, { color: APP_COLORS.themeOppositeColor}]}>Categories</Text>
           <ScrollView horizontal style={SchoolStyles.categories}>
-            <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Level</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.level === "" ? "-" : school.category.level}</Text>
+            <View style={{padding: 10, paddingRight: 0}}>
+              <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
+                <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Level</Text>
+                <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.level === "" ? "-" : school.category.level}</Text>
+              </View>
             </View>
-            <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Religion</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.religion === "" ? "-" : school.category.religion}</Text>
+            <View style={{paddingVertical: 10}}>
+              <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
+                <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Religion</Text>
+                <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.religion === "" ? "-" : school.category.religion}</Text>
+              </View>
             </View>
-            <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Gender</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.gender === "" ? "-" : school.category.gender}</Text>
+            <View style={{paddingVertical: 10}}>
+              <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
+                <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Gender</Text>
+                <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.gender === "" ? "-" : school.category.gender}</Text>
+              </View>
             </View>
-            <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Ownership</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.ownership === "" ? "-" : school.category.ownership}</Text>
+            <View style={{paddingVertical: 10}}>
+              <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
+                <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Ownership</Text>
+                <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.ownership === "" ? "-" : school.category.ownership}</Text>
+              </View>
             </View>
-            <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
-              <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Occupation</Text>
-              <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.occupation === "" ? "-" : school.category.occupation}</Text>
+            <View style={{padding: 10, paddingLeft: 0}}>
+              <View style={[SchoolStyles.card, SchoolStyles.categoryCard, {flex: 1,backgroundColor: APP_COLORS.cardsColor}]}>
+                <Text style={[SchoolStyles.categoryCardKey, {color: APP_COLORS.themeOppositeColor}]}>Occupation</Text>
+                <Text style={[SchoolStyles.categoryCardValue, {color: APP_COLORS.themeOppositeColor}]}>{school.category.occupation === "" ? "-" : school.category.occupation}</Text>
+              </View>
             </View>
           </ScrollView>
         </View>

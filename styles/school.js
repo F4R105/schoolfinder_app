@@ -40,8 +40,8 @@ export default SchoolStyles = StyleSheet.create({
         minWidth: 150,
         marginRight: 10
     },
-    categeryCardKey: {
-        fontSize: 8
+    categoryCardKey: {
+        fontSize: 13
     },
     categoryCardValue: {
         fontSize: 14,
