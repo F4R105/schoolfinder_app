@@ -43,7 +43,6 @@ const Matches = ({route}) => {
   const navigation = useNavigation()
 
   const {state} = route.params
-  console.log(state.query)
 
   const [schools, setSchools] = useState([])
   const [error, setError] = useState(false)
@@ -53,7 +52,7 @@ const Matches = ({route}) => {
   const searchForSchools = async (query) => {
     const endpoint = state.trigger === "search" ? "search" : "filter"
     try{
-      const res = await fetch(`https://038d-197-250-51-163.ngrok-free.app/${endpoint}`, {
+      const res = await fetch(`https://schoolfinder-api.onrender.com/${endpoint}`, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
