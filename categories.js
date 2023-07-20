@@ -10,7 +10,7 @@ const Categories = {
     religion: {
         label: "Religion",
         options: [
-            {id: 1, label: "Mixed", value: "mixed"},
+            {id: 1, label: "Mixed", value: "all"},
             {id: 2, label: "Islamic", value: "islamic"}, 
             {id: 3, label: "Christian", value: "christian"}, 
         ]
@@ -18,7 +18,7 @@ const Categories = {
     gender: {
         label: "Gender",
         options: [
-            {id: 1, label: "Mixed", value: "mixed"},
+            {id: 1, label: "Mixed", value: "all"},
             {id: 2, label: "Boys", value: "boys"}, 
             {id: 3, label: "Girls", value: "girls"}, 
         ]
@@ -38,11 +38,11 @@ const Categories = {
         ]
     },
     occupation: {
-        label: "Occupation", 
+        label: "Accommodation", 
         options: [
             {id:1, label: "Boarding", value: "boarding"},
             {id:2, label: "Day", value: "day"},
-            {id:3, label: "Both", value: "both"}
+            {id:3, label: "Both", value: "all"}
         ]},
     school_fee: {
         label: "School fee", 
